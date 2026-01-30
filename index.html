@@ -22,12 +22,13 @@
         <a-asset-item id="jessieModel" src="./models/jessie.glb"></a-asset-item>
         <a-asset-item id="slinkyModel" src="./models/slinky_dog.glb"></a-asset-item>
         <a-asset-item id="alienModel" src="./models/alien.glb"></a-asset-item>
+        
         <audio id="hbdSound" src="./songs/toystory.mp3" preload="auto"></audio>
       </a-assets>
 
       <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
 
-      <a-entity mindar-image-target="targetIndex: 0">
+      <a-entity mindar-image-target="targetIndex: 0" id="targetEntity">
         
         <a-entity gltf-model="#woodyModel" 
                   rotation="0 0 0" 
@@ -37,49 +38,60 @@
         </a-entity>
 
         <a-entity gltf-model="#buzzModel" 
-                  rotation="0 0 0" 
-                  position="-0.6 0 0" 
+                  rotation="0 -15 0" 
+                  position="-0.6 0 0.2" 
                   scale="0.5 0.5 0.5" 
                   animation-mixer>
         </a-entity>
 
         <a-entity gltf-model="#jessieModel" 
-                  rotation="0 0 0" 
-                  position="0.6 0 0" 
+                  rotation="0 15 0" 
+                  position="0.6 0 0.2" 
                   scale="0.05 0.05 0.05" 
                   animation-mixer>
         </a-entity>
 
         <a-entity gltf-model="#potatoModel" 
-                  rotation="0 0 0" 
-                  position="-0.3 0 -0.5" 
+                  rotation="0 -30 0" 
+                  position="-1.0 0 0.5" 
                   scale="0.04 0.04 0.04" 
                   animation-mixer>
         </a-entity>
 
         <a-entity gltf-model="#slinkyModel" 
-                  rotation="0 0 0" 
-                  position="0.3 0 -0.5" 
+                  rotation="0 30 0" 
+                  position="1.0 0 0.5" 
                   scale="0.04 0.04 0.04" 
                   animation-mixer>
         </a-entity>
 
         <a-entity gltf-model="#greenmanModel" 
                   rotation="0 0 0" 
-                  position="-0.2 0 0.3" 
+                  position="-0.3 0 0.7" 
                   scale="1 1 1" 
                   animation-mixer>
         </a-entity>
 
         <a-entity gltf-model="#alienModel" 
                   rotation="0 0 0" 
-                  position="0.2 0 0.3" 
-                  scale="1 1 1" 
+                  position="0.3 0 0.7" 
+                  scale="2 2 2" 
                   animation-mixer>
         </a-entity>
         
-        <a-entity sound="src: #hbdSound; autoplay: true; loop: false; volume: 2; positional: false"></a-entity>
+        <a-entity sound="src: #hbdSound; autoplay: true; loop: false; volume: 3; positional: false"></a-entity>
         
-      </a-entity> </a-scene>
+      </a-entity>
+    </a-scene>
+
+    <script>
+      document.body.addEventListener('click', function() {
+        const sound = document.querySelector('[sound]');
+        if (sound) {
+          sound.components.sound.playSound();
+          console.log("User clicked, playing sound.");
+        }
+      }, { once: true }); // ทำงานแค่ครั้งเดียวพอ
+    </script>
   </body>
 </html>
