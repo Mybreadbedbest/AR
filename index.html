@@ -15,8 +15,7 @@
              device-orientation-permission-ui="enabled: false">
       
       <a-assets>
-        <!-- <a-asset-item id="woodyModel" src="./animated/woody_Excited.glb"></a-asset-item> -->
-         <a-asset-item id="woodyFbx" src="./animated/woody.fbx"></a-asset-item>
+        <a-asset-item id="woodyModel" src="./animated/woody_Excited.glb"></a-asset-item>
         
         <a-asset-item id="potatoModel" src="./models/potato_head.glb"></a-asset-item>
         <a-asset-item id="buzzModel" src="./models/buzz_lightyear.glb"></a-asset-item>
@@ -32,21 +31,12 @@
 
       <a-entity mindar-image-target="targetIndex: 0" id="targetEntity">
         
-        <a-light type="ambient" intensity="2"></a-light>
-        <a-light type="directional" position="1 1 1" intensity="1"></a-light>
-
-        <!-- <a-entity gltf-model="#woodyModel" 
+        <a-entity gltf-model="#woodyModel" 
                   rotation="0 0 0" 
                   position="0 0 0" 
                   scale="0.5 0.5 0.5" 
-                  animation-mixer="clip: *; loop: repeat; timeScale: 1">
-        </a-entity> -->
-
-        <a-entity fbx-model="src: #woodyFbx" 
-          rotation="0 0 0" 
-          position="0 0 0" 
-          scale="0.5 0.5 0.5"  animation-mixer="clip: *; loop: repeat">
-</a-entity>
+                  animation-mixer>
+        </a-entity>
 
         <a-entity gltf-model="#buzzModel" 
                   rotation="0 90 0" 
@@ -100,6 +90,7 @@
         const sound = document.querySelector('[sound]');
         if (sound) {
           sound.components.sound.playSound();
+          console.log("User clicked, playing sound.");
         }
       }, { once: true });
     </script>
