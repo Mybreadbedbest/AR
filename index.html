@@ -15,20 +15,33 @@
              device-orientation-permission-ui="enabled: false">
       
       <a-assets>
-        <a-asset-item id="avatarModel" src="models/woody.glb"></a-asset-item>
+        <!-- include all models from models/ -->
+        <a-asset-item id="woodyModel" src="models/woody.glb"></a-asset-item>
+        <a-asset-item id="potatoModel" src="models/potato_head.glb"></a-asset-item>
+        <a-asset-item id="buzzlightyearModel" src="models/buzz_lightyear.glb"></a-asset-item>
+        <a-asset-item id="greenman1Model" src="models/greenman1.glb"></a-asset-item>
+        <a-asset-item id="jessieModel" src="models/jessie.glb"></a-asset-item>
+        <a-asset-item id="slinkyModel" src="models/slinky_dog.glb"></a-asset-item>
+        <a-asset-item id="alienModel" src="models/alien.glb"></a-asset-item>
         <audio id="hbdSound" src="songs/toystory.mp3" preload="auto"></audio>
       </a-assets>
 
-      <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
+      <a-entity gltf-model="#woodyModel" rotation="0 0 0" position="0 0 0" scale="0.5 0.5 0.5" animation-mixer></a-entity>
+      <a-entity gltf-model="#potatoModel" rotation="0 0 0" position="0 0 0" scale="0.5 0.5 0.5" animation-mixer></a-entity>
+      <a-entity gltf-model="#buzzlightyearModel" rotation="0 0 0" position="0 0 0" scale="0.5 0.5 0.5" animation-mixer></a-entity>
+      <a-entity gltf-model="#greenman1Model" rotation="0 0 0" position="0 0 0" scale="0.5 0.5 0.5" animation-mixer></a-entity>
+      <a-entity gltf-model="#jessieModel" rotation="0 0 0" position="0 0 0" scale="0.5 0.5 0.5" animation-mixer></a-entity>
+      <a-entity gltf-model="#slinkyModel" rotation="0 0 0" position="0 0 0" scale="0.5 0.5 0.5" animation-mixer></a-entity>
+      <a-entity gltf-model="#alienModel" rotation="0 0 0" position="0 0 0" scale="0.5 0.5 0.5" animation-mixer></a-entity>
 
       <a-entity mindar-image-target="targetIndex: 0">
         
         <a-entity gltf-model="#avatarModel" 
-                  rotation="90 0 0" 
-                  position="0 0 0" 
-                  scale="0.5 0.5 0.5" 
-                  animation-mixer>
-        </a-entity>
+              rotation="0 0 0" 
+              position="0 0 0" 
+              scale="0.5 0.5 0.5" 
+              animation-mixer>
+    </a-entity>
         
         <a-entity sound="src: #hbdSound; autoplay: true; loop: false; volume: 2; positional: false"></a-entity>
         
