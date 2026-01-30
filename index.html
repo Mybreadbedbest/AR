@@ -15,37 +15,71 @@
              device-orientation-permission-ui="enabled: false">
       
       <a-assets>
-        <!-- include all models from models/ -->
-        <a-asset-item id="woodyModel" src="models/woody.glb"></a-asset-item>
-        <a-asset-item id="potatoModel" src="models/potato_head.glb"></a-asset-item>
-        <a-asset-item id="buzzlightyearModel" src="models/buzz_lightyear.glb"></a-asset-item>
-        <a-asset-item id="greenman1Model" src="models/greenman1.glb"></a-asset-item>
-        <a-asset-item id="jessieModel" src="models/jessie.glb"></a-asset-item>
-        <a-asset-item id="slinkyModel" src="models/slinky_dog.glb"></a-asset-item>
-        <a-asset-item id="alienModel" src="models/alien.glb"></a-asset-item>
-        <audio id="hbdSound" src="songs/toystory.mp3" preload="auto"></audio>
+        <a-asset-item id="woodyModel" src="./models/woody.glb"></a-asset-item>
+        <a-asset-item id="potatoModel" src="./models/potato_head.glb"></a-asset-item>
+        <a-asset-item id="buzzModel" src="./models/buzz_lightyear.glb"></a-asset-item>
+        <a-asset-item id="greenmanModel" src="./models/greenman1.glb"></a-asset-item>
+        <a-asset-item id="jessieModel" src="./models/jessie.glb"></a-asset-item>
+        <a-asset-item id="slinkyModel" src="./models/slinky_dog.glb"></a-asset-item>
+        <a-asset-item id="alienModel" src="./models/alien.glb"></a-asset-item>
+        <audio id="hbdSound" src="./songs/toystory.mp3" preload="auto"></audio>
       </a-assets>
 
-      <a-entity gltf-model="#woodyModel" rotation="0 0 0" position="0 0 0" scale="0.5 0.5 0.5" animation-mixer></a-entity>
-      <a-entity gltf-model="#potatoModel" rotation="0 0 0" position="0 0 0" scale="0.5 0.5 0.5" animation-mixer></a-entity>
-      <a-entity gltf-model="#buzzlightyearModel" rotation="0 0 0" position="0 0 0" scale="0.5 0.5 0.5" animation-mixer></a-entity>
-      <a-entity gltf-model="#greenman1Model" rotation="0 0 0" position="0 0 0" scale="0.5 0.5 0.5" animation-mixer></a-entity>
-      <a-entity gltf-model="#jessieModel" rotation="0 0 0" position="0 0 0" scale="0.5 0.5 0.5" animation-mixer></a-entity>
-      <a-entity gltf-model="#slinkyModel" rotation="0 0 0" position="0 0 0" scale="0.5 0.5 0.5" animation-mixer></a-entity>
-      <a-entity gltf-model="#alienModel" rotation="0 0 0" position="0 0 0" scale="0.5 0.5 0.5" animation-mixer></a-entity>
+      <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
 
       <a-entity mindar-image-target="targetIndex: 0">
         
-        <a-entity gltf-model="#avatarModel" 
-              rotation="0 0 0" 
-              position="0 0 0" 
-              scale="0.5 0.5 0.5" 
-              animation-mixer>
-    </a-entity>
+        <a-entity gltf-model="#woodyModel" 
+                  rotation="0 0 0" 
+                  position="0 0 0" 
+                  scale="0.5 0.5 0.5" 
+                  animation-mixer>
+        </a-entity>
+
+        <a-entity gltf-model="#buzzModel" 
+                  rotation="0 0 0" 
+                  position="-0.6 0 0" 
+                  scale="0.5 0.5 0.5" 
+                  animation-mixer>
+        </a-entity>
+
+        <a-entity gltf-model="#jessieModel" 
+                  rotation="0 0 0" 
+                  position="0.6 0 0" 
+                  scale="0.5 0.5 0.5" 
+                  animation-mixer>
+        </a-entity>
+
+        <a-entity gltf-model="#potatoModel" 
+                  rotation="0 0 0" 
+                  position="-0.3 0 -0.5" 
+                  scale="0.4 0.4 0.4" 
+                  animation-mixer>
+        </a-entity>
+
+        <a-entity gltf-model="#slinkyModel" 
+                  rotation="0 0 0" 
+                  position="0.3 0 -0.5" 
+                  scale="0.4 0.4 0.4" 
+                  animation-mixer>
+        </a-entity>
+
+        <a-entity gltf-model="#greenmanModel" 
+                  rotation="0 0 0" 
+                  position="-0.2 0 0.3" 
+                  scale="0.2 0.2 0.2" 
+                  animation-mixer>
+        </a-entity>
+
+        <a-entity gltf-model="#alienModel" 
+                  rotation="0 0 0" 
+                  position="0.2 0 0.3" 
+                  scale="0.2 0.2 0.2" 
+                  animation-mixer>
+        </a-entity>
         
         <a-entity sound="src: #hbdSound; autoplay: true; loop: false; volume: 2; positional: false"></a-entity>
         
-      </a-entity>
-    </a-scene>
+      </a-entity> </a-scene>
   </body>
 </html>
