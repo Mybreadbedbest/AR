@@ -5,9 +5,37 @@
     <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/c-frame/aframe-extras@7.2.0/dist/aframe-extras.min.js"></script>
+    <script src="https://unpkg.com/aframe-look-at-component@0.8.0/dist/aframe-look-at-component.min.js"></script>
+
+    <style>
+      /* UI แบบ 2D บนหน้าจอ (Overlay) */
+      #ui-layer {
+        position: fixed;
+        top: 0; left: 0; width: 100%; height: 100%;
+        pointer-events: none; /* ให้กดทะลุไปหมุนโมเดลได้ */
+        z-index: 999;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        align-items: center;
+        padding-bottom: 20px;
+      }
+      .hint-text {
+        color: white;
+        background: rgba(0, 0, 0, 0.5);
+        padding: 10px 20px;
+        border-radius: 20px;
+        font-family: sans-serif;
+        font-weight: bold;
+      }
+    </style>
   </head>
   
   <body>
+    <div id="ui-layer">
+      <div class="hint-text">🎉 Point camera at the card! 🎉</div>
+    </div>
+
     <a-scene mindar-image="imageTargetSrc: ./targets.mind; filterMinCF:0.0001; filterBeta: 0.001;" 
              color-space="sRGB" 
              renderer="colorManagement: true, physicallyCorrectLights: true" 
@@ -19,20 +47,16 @@
         <a-asset-item id="buzzModel" src="./animated/buzz.glb"></a-asset-item>
         <a-asset-item id="andyModel" src="./animated/andy.glb"></a-asset-item>
         <a-asset-item id="jessieModel" src="./animated/jessie.glb"></a-asset-item>
-        
         <a-asset-item id="potatoModel" src="./animated/potato_head.glb"></a-asset-item>
         <a-asset-item id="slinkyModel" src="./animated/slinky_dog.glb"></a-asset-item>
         <a-asset-item id="hammModel" src="./animated/hamm.glb"></a-asset-item>
         <a-asset-item id="rexxModel" src="./animated/rexx.glb"></a-asset-item>
         <a-asset-item id="lotsoModel" src="./animated/lotso.glb"></a-asset-item>
         <a-asset-item id="bullseyeModel" src="./animated/bullseye.glb"></a-asset-item>
-        
         <a-asset-item id="greenman1Model" src="./animated/greenman1.glb"></a-asset-item>
         <a-asset-item id="greenman2Model" src="./animated/greenman2.glb"></a-asset-item>
         <a-asset-item id="greenman3Model" src="./animated/greenman3.glb"></a-asset-item>
-        
         <a-asset-item id="truckModel" src="./animated/truck.glb"></a-asset-item>
-        
         <audio id="hbdSound" src="./songs/toystory_cut.mp3" preload="auto"></audio>
       </a-assets>
 
@@ -43,133 +67,71 @@
         <a-light type="ambient" intensity="1.2"></a-light>
         <a-light type="directional" position="2 4 2" intensity="1.5"></a-light>
 
-        <a-cylinder radius="6" 
-                    height="0.1" 
-                    position="0 -0.05 0" 
-                    material="opacity: 0; transparent: true">
-        </a-cylinder>
+        <a-cylinder radius="6" height="0.1" position="0 -0.05 0" material="opacity: 0; transparent: true"></a-cylinder>
 
         <a-cylinder src="./base/wall.png" 
-                    radius="6" 
-                    height="5" 
-                    position="0 2.5 0" 
-                    side="double"
-                    open-ended="true"
-                    theta-start="90"
-                    theta-length="180"
+                    radius="8" height="6" position="0 3 0" 
+                    side="double" open-ended="true" 
+                    theta-start="110" theta-length="140" 
                     material="roughness: 1; metalness: 0">
         </a-cylinder>
 
-        <a-ring color="white"
-                radius-inner="5.9"
-                radius-outer="6"
-                rotation="-90 0 0"
-                position="0 0.01 0">
-        </a-ring>
-
-        <a-entity gltf-model="#truckModel" 
-                  rotation="0 -30 0" 
-                  position="0.5 0 -4" 
-                  scale="0.05 0.05 0.05"> 
+        <a-entity position="0 2.5 0" look-at="[camera]">
+            <a-text value="Happy Birthday!" 
+                    color="#FFD700" 
+                    align="center" 
+                    width="10"
+                    shader="msdf"
+                    font="https://raw.githubusercontent.com/etiennepinchon/aframe-fonts/master/fonts/bangers/Bangers-Regular.json">
+            </a-text>
         </a-entity>
 
 
-        <a-entity gltf-model="#woodyModel" 
-                  rotation="0 0 0" 
-                  position="0 0 0" 
-                  scale="25 25 25" 
-                  animation-mixer>
+        <a-entity gltf-model="#truckModel" rotation="0 -30 0" position="0.5 0 -4" scale="0.05 0.05 0.05"></a-entity>
+
+        <a-entity gltf-model="#woodyModel" rotation="0 0 0" position="0 0 0" scale="25 25 25" animation-mixer></a-entity>
+        <a-entity gltf-model="#andyModel" rotation="0 15 0" position="-0.8 0 -0.2" scale="25 25 25" animation-mixer></a-entity>
+        <a-entity gltf-model="#jessieModel" rotation="0 -15 0" position="0.8 0 -0.2" scale="0.02 0.02 0.02"></a-entity>
+
+        <a-entity position="0 1.2 0" animation="property: rotation; to: 0 360 0; loop: true; dur: 10000; easing: linear">
+            <a-entity gltf-model="#buzzModel" position="2.5 0 0" rotation="0 180 0" scale="25 25 25" animation-mixer="clip: *;"></a-entity>
         </a-entity>
 
-        <a-entity gltf-model="#andyModel" 
-                  rotation="0 15 0" 
-                  position="-0.8 0 -0.2" 
-                  scale="25 25 25" 
-                  animation-mixer>
-        </a-entity>
+        <a-entity gltf-model="#rexxModel" rotation="0 30 0" position="-1.6 0 0.3" scale="0.05 0.05 0.05"></a-entity>
+        <a-entity gltf-model="#hammModel" rotation="0 45 0" position="-1.2 0 0.8" scale="0.03 0.03 0.03"></a-entity>
+        <a-entity gltf-model="#bullseyeModel" rotation="0 -30 0" position="1.6 0 0.3" scale="0.02 0.02 0.02"></a-entity>
+        <a-entity gltf-model="#slinkyModel" rotation="0 -45 0" position="1.2 0 0.8" scale="0.015 0.015 0.015"></a-entity>
 
-        <a-entity gltf-model="#jessieModel" 
-                  rotation="0 -15 0" 
-                  position="0.8 0 -0.2" 
-                  scale="0.02 0.02 0.02"> 
-        </a-entity>
+        <a-entity gltf-model="#potatoModel" rotation="0 20 0" position="-0.7 0 1.2" scale="0.03 0.03 0.03"></a-entity>
+        <a-entity gltf-model="#lotsoModel" rotation="0 -20 0" position="0.7 0 1.2" scale="0.3 0.3 0.3"></a-entity>
 
-
-        <a-entity position="0 1.2 0" 
-                  animation="property: rotation; to: 0 360 0; loop: true; dur: 10000; easing: linear">
-            <a-entity gltf-model="#buzzModel" 
-                      position="2.5 0 0" 
-                      rotation="0 180 0" 
-                      scale="25 25 25" 
-                      animation-mixer="clip: *;">
-            </a-entity>
-        </a-entity>
-
-
-        <a-entity gltf-model="#rexxModel" 
-                  rotation="0 30 0" 
-                  position="-1.6 0 0.3" 
-                  scale="0.05 0.05 0.05">
-        </a-entity>
-
-        <a-entity gltf-model="#hammModel" 
-                  rotation="0 45 0" 
-                  position="-1.2 0 0.8" 
-                  scale="0.03 0.03 0.03">
-        </a-entity>
-
-        <a-entity gltf-model="#bullseyeModel" 
-                  rotation="0 -30 0" 
-                  position="1.6 0 0.3" 
-                  scale="0.02 0.02 0.02">
-        </a-entity>
-
-        <a-entity gltf-model="#slinkyModel" 
-                  rotation="0 -45 0" 
-                  position="1.2 0 0.8" 
-                  scale="0.015 0.015 0.015">
-        </a-entity>
-
-
-        <a-entity gltf-model="#potatoModel" 
-                  rotation="0 20 0" 
-                  position="-0.7 0 1.2" 
-                  scale="0.03 0.03 0.03">
-        </a-entity>
-
-        <a-entity gltf-model="#lotsoModel" 
-                  rotation="0 -20 0" 
-                  position="0.7 0 1.2" 
-                  scale="0.3 0.3 0.3">
-        </a-entity>
-
-        <a-entity gltf-model="#greenman1Model" 
-                  rotation="0 0 0" 
-                  position="-0.25 0 1.5" 
-                  scale="0.05 0.05 0.05"> </a-entity>
-
-        <a-entity gltf-model="#greenman2Model" 
-                  rotation="0 0 0" 
-                  position="0 0 1.6" 
-                  scale="0.5 0.5 0.5"> </a-entity>
-
-        <a-entity gltf-model="#greenman3Model" 
-                  rotation="0 0 0" 
-                  position="0.25 0 1.5" 
-                  scale="0.5 0.5 0.5"> </a-entity>
+        <a-entity gltf-model="#greenman1Model" rotation="0 0 0" position="-0.25 0 1.5" scale="0.05 0.05 0.05"></a-entity>
+        <a-entity gltf-model="#greenman2Model" rotation="0 0 0" position="0 0 1.6" scale="0.5 0.5 0.5"></a-entity>
+        <a-entity gltf-model="#greenman3Model" rotation="0 0 0" position="0.25 0 1.5" scale="0.5 0.5 0.5"></a-entity>
         
         <a-entity sound="src: #hbdSound; autoplay: true; loop: false; volume: 3; positional: false"></a-entity>
-        
       </a-entity>
     </a-scene>
 
     <script>
-      document.body.addEventListener('click', function() {
+      // ซ่อนป้าย Hint เมื่อเจอเป้าหมาย
+      const scene = document.querySelector('a-scene');
+      const uiLayer = document.querySelector('.hint-text');
+      
+      scene.addEventListener('targetFound', event => {
+        uiLayer.innerHTML = "🎉 HAPPY BIRTHDAY! 🎉";
+        uiLayer.style.background = "rgba(255, 215, 0, 0.8)"; // สีทอง
+        uiLayer.style.color = "black";
+        
         const sound = document.querySelector('[sound]');
-        if (sound) {
-          sound.components.sound.playSound();
-        }
-      }, { once: true });
+        if (sound) sound.components.sound.playSound();
+      });
+
+      scene.addEventListener('targetLost', event => {
+        uiLayer.innerHTML = "Point camera at the card!";
+        uiLayer.style.background = "rgba(0, 0, 0, 0.5)";
+        uiLayer.style.color = "white";
+      });
     </script>
   </body>
 </html>
