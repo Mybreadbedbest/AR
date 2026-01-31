@@ -15,10 +15,10 @@
              device-orientation-permission-ui="enabled: false">
       
       <a-assets>
-        <a-asset-item id="woodyModel" src="./animated/woody_Excited.glb"></a-asset-item>
+        <a-asset-item id="woodyModel" src="./animated/woody.glb"></a-asset-item>
+        <a-asset-item id="buzzModel" src="./animated/buzz.glb"></a-asset-item>
         
         <a-asset-item id="potatoModel" src="./models/potato_head.glb"></a-asset-item>
-        <a-asset-item id="buzzModel" src="./models/buzz_lightyear.glb"></a-asset-item>
         <a-asset-item id="greenmanModel" src="./models/greenman1.glb"></a-asset-item>
         <a-asset-item id="jessieModel" src="./models/jessie.glb"></a-asset-item>
         <a-asset-item id="slinkyModel" src="./models/slinky_dog.glb"></a-asset-item>
@@ -38,13 +38,16 @@
                   animation-mixer>
         </a-entity>
 
-        <a-entity gltf-model="#buzzModel" 
-                  rotation="0 90 0" 
-                  position="-0.6 0.45 0" 
-                  scale="0.5 0.5 0.5" 
-                  animation-mixer>
+        <a-entity position="0 0.5 0" 
+                  animation="property: rotation; to: 0 360 0; loop: true; dur: 8000; easing: linear">
+            
+            <a-entity gltf-model="#buzzModel" 
+                      position="0.8 0 0" 
+                      rotation="0 180 0" 
+                      scale="25 25 25" 
+                      animation-mixer="clip: *;">
+            </a-entity>
         </a-entity>
-
         <a-entity gltf-model="#jessieModel" 
                   rotation="0 0 0" 
                   position="0.6 0 0" 
