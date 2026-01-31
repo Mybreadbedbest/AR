@@ -17,12 +17,19 @@
       <a-assets>
         <a-asset-item id="woodyModel" src="./animated/woody.glb"></a-asset-item>
         <a-asset-item id="buzzModel" src="./animated/buzz.glb"></a-asset-item>
-        
+        <a-asset-item id="andyModel" src="./animated/andy.glb"></a-asset-item>
+
         <a-asset-item id="potatoModel" src="./models/potato_head.glb"></a-asset-item>
         <a-asset-item id="greenmanModel" src="./models/greenman1.glb"></a-asset-item>
         <a-asset-item id="jessieModel" src="./models/jessie.glb"></a-asset-item>
         <a-asset-item id="slinkyModel" src="./models/slinky_dog.glb"></a-asset-item>
         <a-asset-item id="alienModel" src="./models/alien.glb"></a-asset-item>
+        
+        <a-asset-item id="hammModel" src="./models/hamm.glb"></a-asset-item>
+        <a-asset-item id="rexxModel" src="./models/rexx.glb"></a-asset-item>
+        <a-asset-item id="lotsoModel" src="./models/lotso.glb"></a-asset-item>
+        <a-asset-item id="bullseyeModel" src="./models/bullseye.glb"></a-asset-item>
+        <a-asset-item id="truckModel" src="./models/truck.glb"></a-asset-item>
         
         <audio id="hbdSound" src="./songs/toystory_cut.mp3" preload="auto"></audio>
       </a-assets>
@@ -31,6 +38,34 @@
 
       <a-entity mindar-image-target="targetIndex: 0" id="targetEntity">
         
+        <a-entity gltf-model="#truckModel" 
+                  rotation="0 0 0" 
+                  position="0 0 -2.0" 
+                  scale="25 25 25" 
+                  animation-mixer>
+        </a-entity>
+
+        <a-entity gltf-model="#rexxModel" 
+                  rotation="0 0 0" 
+                  position="-1.5 0 -1.0" 
+                  scale="25 25 25" 
+                  animation-mixer>
+        </a-entity>
+
+        <a-entity gltf-model="#hammModel" 
+                  rotation="0 0 0" 
+                  position="1.5 0 -1.0" 
+                  scale="25 25 25" 
+                  animation-mixer>
+        </a-entity>
+
+         <a-entity gltf-model="#bullseyeModel" 
+                  rotation="0 0 0" 
+                  position="-0.5 0 -1.2" 
+                  scale="25 25 25" 
+                  animation-mixer>
+        </a-entity>
+
         <a-entity gltf-model="#woodyModel" 
                   rotation="0 0 0" 
                   position="0 0 0" 
@@ -38,47 +73,62 @@
                   animation-mixer>
         </a-entity>
 
-        <a-entity position="0 0.5 0" 
+        <a-entity gltf-model="#andyModel" 
+                  rotation="0 0 0" 
+                  position="-0.6 0 0" 
+                  scale="25 25 25" 
+                  animation-mixer>
+        </a-entity>
+
+        <a-entity gltf-model="#lotsoModel" 
+                  rotation="0 0 0" 
+                  position="0.6 0 0" 
+                  scale="25 25 25" 
+                  animation-mixer>
+        </a-entity>
+
+        <a-entity position="0 1.5 0" 
                   animation="property: rotation; to: 0 360 0; loop: true; dur: 8000; easing: linear">
-            
             <a-entity gltf-model="#buzzModel" 
-                      position="0.8 0 0" 
+                      position="1.2 0 0" 
                       rotation="0 180 0" 
                       scale="25 25 25" 
                       animation-mixer="clip: *;">
             </a-entity>
         </a-entity>
+
+
         <a-entity gltf-model="#jessieModel" 
                   rotation="0 0 0" 
-                  position="0.6 0 0" 
+                  position="0.9 0 0.5" 
                   scale="0.05 0.05 0.05" 
                   animation-mixer>
         </a-entity>
 
         <a-entity gltf-model="#potatoModel" 
                   rotation="0 0 0" 
-                  position="-1.0 0 0" 
+                  position="-1.0 0 0.5" 
                   scale="0.04 0.04 0.04" 
                   animation-mixer>
         </a-entity>
 
         <a-entity gltf-model="#slinkyModel" 
                   rotation="0 0 0" 
-                  position="1.0 0 0" 
+                  position="1.2 0 0.5" 
                   scale="0.04 0.04 0.04" 
                   animation-mixer>
         </a-entity>
 
         <a-entity gltf-model="#greenmanModel" 
                   rotation="0 0 0" 
-                  position="-0.3 0 0.3" 
+                  position="-0.3 0 0.8" 
                   scale="3 3 3" 
                   animation-mixer>
         </a-entity>
 
         <a-entity gltf-model="#alienModel" 
                   rotation="0 0 0" 
-                  position="0.3 0 0.3" 
+                  position="0.3 0 0.8" 
                   scale="2 2 2" 
                   animation-mixer>
         </a-entity>
