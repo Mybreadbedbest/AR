@@ -15,14 +15,13 @@
         z-index: 999;
         display: flex;
         flex-direction: column;
-        justify-content: center; /* จัดให้อยู่ตรงกลางจอ */
+        justify-content: center;
         align-items: center;
       }
       
-      /* ป้ายบอกให้แตะหน้าจอ (เพื่อให้เพลงเล่น) */
       #start-btn {
-        pointer-events: auto; /* ให้กดได้ */
-        background: rgba(255, 215, 0, 0.9); /* สีทอง */
+        pointer-events: auto;
+        background: rgba(255, 215, 0, 0.9);
         color: black;
         font-weight: bold;
         font-size: 18px;
@@ -30,7 +29,7 @@
         border-radius: 50px;
         border: 2px solid white;
         box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-        font-family: 'Kanit', sans-serif; /* ถ้าเครื่องมีฟอนต์ไทย */
+        font-family: sans-serif;
         display: flex;
         align-items: center;
         gap: 10px;
@@ -47,7 +46,7 @@
         border-radius: 20px;
         font-family: sans-serif;
         font-size: 14px;
-        display: none; /* ซ่อนไว้ก่อน จะโชว์ตอนเริ่มแล้ว */
+        display: none;
       }
 
       @keyframes pulse {
@@ -63,8 +62,7 @@
       <div id="start-btn" onclick="startExperience()">
         👆 แตะเพื่อเริ่มปาร์ตี้ 🎵
       </div>
-      
-      <div class="hint-text" id="bottom-hint">ส่องกล้องไปที่การ์ดเพื่อเริ่มงานวันเกิด! 🎉</div>
+      <div class="hint-text" id="bottom-hint">ส่องกล้องไปที่การ์ด! 🎉</div>
     </div>
 
     <a-scene mindar-image="imageTargetSrc: ./targets.mind; filterMinCF:0.0001; filterBeta: 0.001;" 
@@ -101,14 +99,13 @@
         <a-cylinder radius="6" height="0.1" position="0 -0.05 0" material="opacity: 0; transparent: true"></a-cylinder>
 
         <a-cylinder src="./base/wall.png" 
-                    radius="2" height="1" position="0 1.5 0" 
+                    radius="4.5" height="3" position="0 1.5 0" 
                     side="double" open-ended="true" 
                     theta-start="110" theta-length="140" 
                     material="roughness: 1; metalness: 0">
         </a-cylinder>
 
-
-        <a-entity position="0 0.8 1.6" look-at="[camera]">
+        <a-entity position="0 0.8 1.1" look-at="[camera]">
             <a-text value="Happy Birthday!" 
                     color="#FF4500" 
                     align="center" 
@@ -118,28 +115,29 @@
             </a-text>
         </a-entity>
 
-
-        <a-entity gltf-model="#truckModel" rotation="0 -30 0" position="0.5 0 -4" scale="0.05 0.05 0.05"></a-entity>
+        <a-entity gltf-model="#truckModel" rotation="0 -30 0" position="0.5 0 -3.5" scale="0.05 0.05 0.05"></a-entity>
 
         <a-entity gltf-model="#woodyModel" rotation="0 0 0" position="0 0 0" scale="25 25 25" animation-mixer></a-entity>
-        <a-entity gltf-model="#andyModel" rotation="0 15 0" position="-0.8 0 -0.2" scale="25 25 25" animation-mixer></a-entity>
-        <a-entity gltf-model="#jessieModel" rotation="0 -15 0" position="0.8 0 -0.2" scale="0.02 0.02 0.02"></a-entity>
+        
+        <a-entity gltf-model="#andyModel" rotation="0 15 0" position="-0.6 0 -0.1" scale="25 25 25" animation-mixer></a-entity>
+        <a-entity gltf-model="#jessieModel" rotation="0 -15 0" position="0.6 0 -0.1" scale="0.02 0.02 0.02"></a-entity>
 
         <a-entity position="0 1.2 0" animation="property: rotation; to: 0 360 0; loop: true; dur: 10000; easing: linear">
-            <a-entity gltf-model="#buzzModel" position="2.5 0 0" rotation="0 180 0" scale="25 25 25" animation-mixer="clip: *;"></a-entity>
+            <a-entity gltf-model="#buzzModel" position="2.0 0 0" rotation="0 180 0" scale="25 25 25" animation-mixer="clip: *;"></a-entity>
         </a-entity>
 
-        <a-entity gltf-model="#rexxModel" rotation="0 30 0" position="-1.6 0 0.3" scale="0.05 0.05 0.05"></a-entity>
-        <a-entity gltf-model="#hammModel" rotation="0 45 0" position="-1.2 0 0.8" scale="0.03 0.03 0.03"></a-entity>
-        <a-entity gltf-model="#bullseyeModel" rotation="0 -30 0" position="1.6 0 0.3" scale="0.02 0.02 0.02"></a-entity>
-        <a-entity gltf-model="#slinkyModel" rotation="0 -45 0" position="1.2 0 0.8" scale="0.015 0.015 0.015"></a-entity>
+        <a-entity gltf-model="#rexxModel" rotation="0 30 0" position="-1.2 0 0.3" scale="0.05 0.05 0.05"></a-entity>
+        <a-entity gltf-model="#bullseyeModel" rotation="0 -30 0" position="1.2 0 0.3" scale="0.02 0.02 0.02"></a-entity>
+        
+        <a-entity gltf-model="#hammModel" rotation="0 45 0" position="-0.9 0 0.6" scale="0.03 0.03 0.03"></a-entity>
+        <a-entity gltf-model="#slinkyModel" rotation="0 -45 0" position="0.9 0 0.6" scale="0.015 0.015 0.015"></a-entity>
 
-        <a-entity gltf-model="#potatoModel" rotation="0 20 0" position="-0.7 0 1.2" scale="0.03 0.03 0.03"></a-entity>
-        <a-entity gltf-model="#lotsoModel" rotation="0 -20 0" position="0.7 0 1.2" scale="0.3 0.3 0.3"></a-entity>
+        <a-entity gltf-model="#potatoModel" rotation="0 20 0" position="-0.5 0 0.9" scale="0.03 0.03 0.03"></a-entity>
+        <a-entity gltf-model="#lotsoModel" rotation="0 -20 0" position="0.5 0 0.9" scale="0.3 0.3 0.3"></a-entity>
 
-        <a-entity gltf-model="#greenman1Model" rotation="0 0 0" position="-0.25 0 1.5" scale="0.08 0.08 0.08"></a-entity>
-        <a-entity gltf-model="#greenman2Model" rotation="0 0 0" position="0 0 1.6" scale="0.7 0.7 0.7"></a-entity>
-        <a-entity gltf-model="#greenman3Model" rotation="0 0 0" position="0.25 0 1.5" scale="0.7 0.7 0.7"></a-entity>
+        <a-entity gltf-model="#greenman1Model" rotation="0 0 0" position="-0.25 0 1.0" scale="0.08 0.08 0.08"></a-entity>
+        <a-entity gltf-model="#greenman2Model" rotation="0 0 0" position="0 0 1.1" scale="0.7 0.7 0.7"></a-entity>
+        <a-entity gltf-model="#greenman3Model" rotation="0 0 0" position="0.25 0 1.0" scale="0.7 0.7 0.7"></a-entity>
         
         <a-entity sound="src: #hbdSound; autoplay: false; loop: true; volume: 3; positional: false"></a-entity>
       </a-entity>
@@ -149,40 +147,28 @@
       let isMusicPlaying = false;
 
       function startExperience() {
-        // 1. ซ่อนปุ่มเริ่ม
         document.getElementById('start-btn').style.display = 'none';
-        
-        // 2. แสดงคำแนะนำด้านล่าง
         document.getElementById('bottom-hint').style.display = 'block';
         
-        // 3. ปลดล็อก AudioContext (สำหรับ iOS)
         const soundEntity = document.querySelector('[sound]');
         if (soundEntity && soundEntity.components.sound) {
-           // สั่ง play ครั้งแรกเบาๆ เพื่อปลดล็อก
            soundEntity.components.sound.playSound();
            soundEntity.components.sound.stopSound();
-           isMusicPlaying = true; // พร้อมเล่นจริงเมื่อเจอการ์ด
+           isMusicPlaying = true;
         }
       }
 
       const scene = document.querySelector('a-scene');
       
       scene.addEventListener('targetFound', event => {
-        // เมื่อเจอการ์ด ให้เล่นเพลง (ถ้ากดปุ่มเริ่มไปแล้ว)
         if (isMusicPlaying) {
           const sound = document.querySelector('[sound]');
           if(sound) sound.components.sound.playSound();
         }
-        
-        // เปลี่ยนข้อความ Hint
         document.getElementById('bottom-hint').innerHTML = "🎉 สุขสันต์วันเกิด! 🎉";
       });
 
       scene.addEventListener('targetLost', event => {
-        // เมื่อการ์ดหาย ให้หยุดเพลง (ถ้าต้องการ)
-        // const sound = document.querySelector('[sound]');
-        // if(sound) sound.components.sound.stopSound();
-
         document.getElementById('bottom-hint').innerHTML = "ส่องกล้องไปที่การ์ดเพื่อดูต่อ...";
       });
     </script>
