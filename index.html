@@ -18,17 +18,18 @@
         <a-asset-item id="woodyModel" src="./animated/woody.glb"></a-asset-item>
         <a-asset-item id="buzzModel" src="./animated/buzz.glb"></a-asset-item>
         <a-asset-item id="andyModel" src="./animated/andy.glb"></a-asset-item>
-
         <a-asset-item id="jessieModel" src="./animated/jessie.glb"></a-asset-item>
+        
         <a-asset-item id="potatoModel" src="./animated/potato_head.glb"></a-asset-item>
-        <a-asset-item id="greenman1Model" src="./animated/greenman1.glb"></a-asset-item>
         <a-asset-item id="slinkyModel" src="./animated/slinky_dog.glb"></a-asset-item>
-        <a-asset-item id="greenman2Model" src="./animated/greenman2.glb"></a-asset-item>
-        <a-asset-item id="greenman3Model" src="./animated/greenman3.glb"></a-asset-item>
         <a-asset-item id="hammModel" src="./animated/hamm.glb"></a-asset-item>
         <a-asset-item id="rexxModel" src="./animated/rexx.glb"></a-asset-item>
         <a-asset-item id="lotsoModel" src="./animated/lotso.glb"></a-asset-item>
         <a-asset-item id="bullseyeModel" src="./animated/bullseye.glb"></a-asset-item>
+        
+        <a-asset-item id="greenman1Model" src="./animated/greenman1.glb"></a-asset-item>
+        <a-asset-item id="greenman2Model" src="./animated/greenman2.glb"></a-asset-item>
+        <a-asset-item id="greenman3Model" src="./animated/greenman3.glb"></a-asset-item>
         
         <a-asset-item id="truckModel" src="./animated/truck.glb"></a-asset-item>
         
@@ -39,15 +40,14 @@
 
       <a-entity mindar-image-target="targetIndex: 0" id="targetEntity">
         
-        <a-light type="ambient" intensity="1.5"></a-light>
-        <a-light type="directional" position="1 2 1" intensity="1"></a-light>
-
+        <a-light type="ambient" intensity="1.2"></a-light>
+        <a-light type="directional" position="2 4 2" intensity="1.5"></a-light>
 
         <a-entity gltf-model="#truckModel" 
-                  rotation="0 0 0" 
-                  position="-90 0 -2" 
-                  scale="0.01 0.01 0.01">
-        </a-entity>
+                  rotation="0 -30 0" 
+                  position="0.5 0 -4" 
+                  scale="0.05 0.05 0.05"> </a-entity>
+
 
         <a-entity gltf-model="#woodyModel" 
                   rotation="0 0 0" 
@@ -57,80 +57,82 @@
         </a-entity>
 
         <a-entity gltf-model="#andyModel" 
-                  rotation="0 0 0" 
-                  position="-0.8 0 0" 
-                  scale="20 20 20" 
+                  rotation="0 15 0" 
+                  position="-0.7 0 -0.2" 
+                  scale="25 25 25" 
                   animation-mixer>
         </a-entity>
 
         <a-entity gltf-model="#jessieModel" 
-                  rotation="0 0 0" 
-                  position="0.8 0 0" 
-                  scale="0.01 0.01 0.01">
+                  rotation="0 -15 0" 
+                  position="0.7 0 -0.2" 
+                  scale="0.02 0.02 0.02"> 
         </a-entity>
 
-        <a-entity position="0 0.5 0" 
-                  animation="property: rotation; to: 0 360 0; loop: true; dur: 8000; easing: linear">
+
+        <a-entity position="0 1.2 0" 
+                  animation="property: rotation; to: 0 360 0; loop: true; dur: 10000; easing: linear">
             <a-entity gltf-model="#buzzModel" 
-                      position="2 0 0" 
+                      position="2.2 0 0" 
                       rotation="0 180 0" 
                       scale="25 25 25" 
                       animation-mixer="clip: *;">
             </a-entity>
         </a-entity>
 
-        <a-entity gltf-model="#rexxModel" 
-                  rotation="0 30 0" 
-                  position="-1.5 0 -0.5" 
-                  scale="0.05 0.05 0.05">
-        </a-entity>
 
-        <a-entity gltf-model="#bullseyeModel" 
-                  rotation="0 -30 0" 
-                  position="1.5 0 -0.5" 
-                  scale="0.02 0.02 0.02">
+        <a-entity gltf-model="#rexxModel" 
+                  rotation="0 45 0" 
+                  position="-1.4 0 0.2" 
+                  scale="0.05 0.05 0.05">
         </a-entity>
 
         <a-entity gltf-model="#hammModel" 
                   rotation="0 45 0" 
-                  position="-1.2 0 0.5" 
+                  position="-1.0 0 0.5" 
                   scale="0.03 0.03 0.03">
+        </a-entity>
+
+        <a-entity gltf-model="#bullseyeModel" 
+                  rotation="0 -45 0" 
+                  position="1.4 0 0.2" 
+                  scale="0.02 0.02 0.02">
         </a-entity>
 
         <a-entity gltf-model="#slinkyModel" 
                   rotation="0 -45 0" 
-                  position="1.2 0 0.5" 
-                  scale="0.01 0.01 0.01">
+                  position="1.0 0 0.5" 
+                  scale="0.015 0.015 0.015">
         </a-entity>
 
+
         <a-entity gltf-model="#potatoModel" 
-                  rotation="0 0 0" 
+                  rotation="0 20 0" 
                   position="-0.5 0 0.8" 
                   scale="0.03 0.03 0.03">
         </a-entity>
 
         <a-entity gltf-model="#lotsoModel" 
-                  rotation="0 0 0" 
+                  rotation="0 -20 0" 
                   position="0.5 0 0.8" 
                   scale="0.03 0.03 0.03">
         </a-entity>
 
         <a-entity gltf-model="#greenman1Model" 
                   rotation="0 0 0" 
-                  position="-0.2 0 1.2" 
-                  scale="0.5 0.5 0.5">
+                  position="-0.25 0 1.2" 
+                  scale="0.4 0.4 0.4">
         </a-entity>
 
         <a-entity gltf-model="#greenman2Model" 
                   rotation="0 0 0" 
-                  position="0.2 0 1.2" 
-                  scale="0.5 0.5 0.5">
-        </a-entity>
+                  position="0 0 1.3" 
+                  scale="0.4 0.4 0.4"> </a-entity>
 
         <a-entity gltf-model="#greenman3Model" 
                   rotation="0 0 0" 
-                  position="0 0 1.4" 
-                  scale="0.3 0.3 0.3">
+                  position="0.25 0 1.2" 
+                  scale="0.4 0.4 0.4">
         </a-entity>
         
         <a-entity sound="src: #hbdSound; autoplay: true; loop: false; volume: 3; positional: false"></a-entity>
