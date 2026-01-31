@@ -8,32 +8,63 @@
     <script src="https://unpkg.com/aframe-look-at-component@0.8.0/dist/aframe-look-at-component.min.js"></script>
 
     <style>
-      /* UI แบบ 2D บนหน้าจอ (Overlay) */
       #ui-layer {
         position: fixed;
         top: 0; left: 0; width: 100%; height: 100%;
-        pointer-events: none; /* ให้กดทะลุไปหมุนโมเดลได้ */
+        pointer-events: none;
         z-index: 999;
         display: flex;
         flex-direction: column;
-        justify-content: flex-end;
+        justify-content: center; /* จัดให้อยู่ตรงกลางจอ */
         align-items: center;
-        padding-bottom: 20px;
       }
+      
+      /* ป้ายบอกให้แตะหน้าจอ (เพื่อให้เพลงเล่น) */
+      #start-btn {
+        pointer-events: auto; /* ให้กดได้ */
+        background: rgba(255, 215, 0, 0.9); /* สีทอง */
+        color: black;
+        font-weight: bold;
+        font-size: 18px;
+        padding: 15px 30px;
+        border-radius: 50px;
+        border: 2px solid white;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        font-family: 'Kanit', sans-serif; /* ถ้าเครื่องมีฟอนต์ไทย */
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        cursor: pointer;
+        animation: pulse 2s infinite;
+      }
+
       .hint-text {
+        position: fixed;
+        bottom: 30px;
         color: white;
-        background: rgba(0, 0, 0, 0.5);
-        padding: 10px 20px;
+        background: rgba(0, 0, 0, 0.6);
+        padding: 8px 16px;
         border-radius: 20px;
         font-family: sans-serif;
-        font-weight: bold;
+        font-size: 14px;
+        display: none; /* ซ่อนไว้ก่อน จะโชว์ตอนเริ่มแล้ว */
+      }
+
+      @keyframes pulse {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.05); }
+        100% { transform: scale(1); }
       }
     </style>
   </head>
   
   <body>
     <div id="ui-layer">
-      <div class="hint-text">🎉 Point camera at the card! 🎉</div>
+      <div id="start-btn" onclick="startExperience()">
+        👆 แตะเพื่อเริ่มปาร์ตี้ 🎵
+      </div>
+      
+      <div class="hint-text" id="bottom-hint">ส่องกล้องไปที่การ์ดเพื่อเริ่มงานวันเกิด! 🎉</div>
     </div>
 
     <a-scene mindar-image="imageTargetSrc: ./targets.mind; filterMinCF:0.0001; filterBeta: 0.001;" 
@@ -70,17 +101,18 @@
         <a-cylinder radius="6" height="0.1" position="0 -0.05 0" material="opacity: 0; transparent: true"></a-cylinder>
 
         <a-cylinder src="./base/wall.png" 
-                    radius="8" height="6" position="0 3 0" 
+                    radius="5" height="3" position="0 1.5 0" 
                     side="double" open-ended="true" 
                     theta-start="110" theta-length="140" 
                     material="roughness: 1; metalness: 0">
         </a-cylinder>
 
-        <a-entity position="0 2.5 0" look-at="[camera]">
+
+        <a-entity position="0 0.8 1.6" look-at="[camera]">
             <a-text value="Happy Birthday!" 
-                    color="#FFD700" 
+                    color="#FF4500" 
                     align="center" 
-                    width="10"
+                    width="6" 
                     shader="msdf"
                     font="https://raw.githubusercontent.com/etiennepinchon/aframe-fonts/master/fonts/bangers/Bangers-Regular.json">
             </a-text>
@@ -109,28 +141,49 @@
         <a-entity gltf-model="#greenman2Model" rotation="0 0 0" position="0 0 1.6" scale="0.5 0.5 0.5"></a-entity>
         <a-entity gltf-model="#greenman3Model" rotation="0 0 0" position="0.25 0 1.5" scale="0.5 0.5 0.5"></a-entity>
         
-        <a-entity sound="src: #hbdSound; autoplay: true; loop: false; volume: 3; positional: false"></a-entity>
+        <a-entity sound="src: #hbdSound; autoplay: false; loop: true; volume: 3; positional: false"></a-entity>
       </a-entity>
     </a-scene>
 
     <script>
-      // ซ่อนป้าย Hint เมื่อเจอเป้าหมาย
+      let isMusicPlaying = false;
+
+      function startExperience() {
+        // 1. ซ่อนปุ่มเริ่ม
+        document.getElementById('start-btn').style.display = 'none';
+        
+        // 2. แสดงคำแนะนำด้านล่าง
+        document.getElementById('bottom-hint').style.display = 'block';
+        
+        // 3. ปลดล็อก AudioContext (สำหรับ iOS)
+        const soundEntity = document.querySelector('[sound]');
+        if (soundEntity && soundEntity.components.sound) {
+           // สั่ง play ครั้งแรกเบาๆ เพื่อปลดล็อก
+           soundEntity.components.sound.playSound();
+           soundEntity.components.sound.stopSound();
+           isMusicPlaying = true; // พร้อมเล่นจริงเมื่อเจอการ์ด
+        }
+      }
+
       const scene = document.querySelector('a-scene');
-      const uiLayer = document.querySelector('.hint-text');
       
       scene.addEventListener('targetFound', event => {
-        uiLayer.innerHTML = "🎉 HAPPY BIRTHDAY! 🎉";
-        uiLayer.style.background = "rgba(255, 215, 0, 0.8)"; // สีทอง
-        uiLayer.style.color = "black";
+        // เมื่อเจอการ์ด ให้เล่นเพลง (ถ้ากดปุ่มเริ่มไปแล้ว)
+        if (isMusicPlaying) {
+          const sound = document.querySelector('[sound]');
+          if(sound) sound.components.sound.playSound();
+        }
         
-        const sound = document.querySelector('[sound]');
-        if (sound) sound.components.sound.playSound();
+        // เปลี่ยนข้อความ Hint
+        document.getElementById('bottom-hint').innerHTML = "🎉 สุขสันต์วันเกิด! 🎉";
       });
 
       scene.addEventListener('targetLost', event => {
-        uiLayer.innerHTML = "Point camera at the card!";
-        uiLayer.style.background = "rgba(0, 0, 0, 0.5)";
-        uiLayer.style.color = "white";
+        // เมื่อการ์ดหาย ให้หยุดเพลง (ถ้าต้องการ)
+        // const sound = document.querySelector('[sound]');
+        // if(sound) sound.components.sound.stopSound();
+
+        document.getElementById('bottom-hint').innerHTML = "ส่องกล้องไปที่การ์ดเพื่อดูต่อ...";
       });
     </script>
   </body>
