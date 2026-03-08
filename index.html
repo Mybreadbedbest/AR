@@ -139,7 +139,7 @@
       <a-asset-item id="greenman2Model" src="./animated/greenman2.glb"></a-asset-item>
       <a-asset-item id="greenman3Model" src="./animated/greenman3.glb"></a-asset-item>
       <a-asset-item id="truckModel" src="./animated/truck.glb"></a-asset-item>
-      <audio id="hbdSound" src="./songs/toystory_cut.mp3" preload="auto"></audio>
+      <audio id="hbdSound" src="./songs/toystory_cut.mp3" preload="auto" loop></audio>
     </a-assets>
 
     <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
@@ -182,8 +182,6 @@
       <a-entity gltf-model="#greenman1Model" rotation="0 0 0" position="-0.25 0 1.0" scale="0.08 0.08 0.08"></a-entity>
       <a-entity gltf-model="#greenman2Model" rotation="0 0 0" position="0 0 1.1" scale="0.7 0.7 0.7"></a-entity>
       <a-entity gltf-model="#greenman3Model" rotation="0 0 0" position="0.25 0 1.0" scale="0.7 0.7 0.7"></a-entity>
-
-      <a-entity sound="src: #hbdSound; autoplay: false; loop: true; volume: 3; positional: false"></a-entity>
     </a-entity>
   </a-scene>
 
@@ -199,21 +197,15 @@
       document.getElementById('start-btn').style.display = 'none';
       document.getElementById('bottom-hint').style.display = 'block';
 
-      const scene = document.querySelector('a-scene');
-
-      // Resume A-Frame Audio Context
-      if (scene.audioListener && scene.audioListener.context.state === 'suspended') {
-        scene.audioListener.context.resume();
-      }
-
-      // Synchronous Play/Pause to "bless" the specific sound component
-      const soundEntity = document.querySelector('[sound]');
-      if (soundEntity && soundEntity.components.sound) {
-        soundEntity.components.sound.playSound();
-        soundEntity.components.sound.pauseSound();
-      }
-
+      const hbdSound = document.getElementById('hbdSound');
+      // Play and immediately pause to unlock the element silently
+      hbdSound.play().then(() => {
+        hbdSound.pause();
+        hbdSound.currentTime = 0;
+      }).catch(err => console.log("Audio unlock failed", err));
       isMusicUnlocked = true;
+
+      const scene = document.querySelector('a-scene');
       scene.systems["mindar-image-system"].start();
       document.getElementById('targetEntity').setAttribute('visible', 'true');
     }
@@ -224,8 +216,7 @@
 
     targetEntity.addEventListener('targetFound', event => {
       if (isMusicUnlocked) {
-        const sound = document.querySelector('[sound]');
-        if (sound) sound.components.sound.playSound();
+        document.getElementById('hbdSound').play();
       }
       document.getElementById('bottom-hint').innerHTML = "🎉 สุขสันต์วันเกิด! 🎉";
 
@@ -240,8 +231,7 @@
 
     targetEntity.addEventListener('targetLost', event => {
       if (isMusicUnlocked) {
-        const sound = document.querySelector('[sound]');
-        if (sound) sound.components.sound.pauseSound();
+        document.getElementById('hbdSound').pause();
       }
       document.getElementById('bottom-hint').innerHTML = "ส่องกล้องไปที่การ์ดเพื่อดูต่อ...";
 
