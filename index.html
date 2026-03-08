@@ -201,17 +201,6 @@
 
       const scene = document.querySelector('a-scene');
 
-      // Silent HTML5 Audio Unlock
-      const hbdSound = document.getElementById('hbdSound');
-      if (hbdSound) {
-        hbdSound.muted = true;
-        hbdSound.play().then(() => {
-          hbdSound.pause();
-          hbdSound.currentTime = 0;
-          hbdSound.muted = false;
-        }).catch(err => console.log("Audio unlock failed", err));
-      }
-
       // Resume A-Frame Audio Context
       if (scene.audioListener && scene.audioListener.context.state === 'suspended') {
         scene.audioListener.context.resume();
