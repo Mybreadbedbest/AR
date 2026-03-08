@@ -1,169 +1,249 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/c-frame/aframe-extras@7.2.0/dist/aframe-extras.min.js"></script>
-    <script src="https://unpkg.com/aframe-look-at-component@0.8.0/dist/aframe-look-at-component.min.js"></script>
 
-    <style>
-      #ui-layer {
-        position: fixed;
-        top: 0; left: 0; width: 100%; height: 100%;
-        pointer-events: none;
-        z-index: 999;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-      }
-      
-      #start-btn {
-        pointer-events: auto;
-        background: rgba(255, 215, 0, 0.9);
-        color: black;
-        font-weight: bold;
-        font-size: 18px;
-        padding: 15px 30px;
-        border-radius: 50px;
-        border: 2px solid white;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-        font-family: sans-serif;
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        cursor: pointer;
-        animation: pulse 2s infinite;
-      }
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/c-frame/aframe-extras@7.2.0/dist/aframe-extras.min.js"></script>
+  <script src="https://unpkg.com/aframe-look-at-component@0.8.0/dist/aframe-look-at-component.min.js"></script>
+  <script
+    src="https://unpkg.com/aframe-particle-system-component@1.1.3/dist/aframe-particle-system-component.min.js"></script>
 
-      .hint-text {
-        position: fixed;
-        bottom: 30px;
-        color: white;
-        background: rgba(0, 0, 0, 0.6);
-        padding: 8px 16px;
-        border-radius: 20px;
-        font-family: sans-serif;
-        font-size: 14px;
-        display: none;
+  <style>
+    #loading-screen {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.85);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      z-index: 1000;
+      pointer-events: auto;
+    }
+
+    .spinner {
+      border: 6px solid #f3f3f3;
+      border-top: 6px solid #FFD700;
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      animation: spin 1s linear infinite;
+      margin-bottom: 20px;
+    }
+
+    @keyframes spin {
+      0% {
+        transform: rotate(0deg);
       }
 
-      @keyframes pulse {
-        0% { transform: scale(1); }
-        50% { transform: scale(1.05); }
-        100% { transform: scale(1); }
+      100% {
+        transform: rotate(360deg);
       }
-    </style>
-  </head>
-  
-  <body>
-    <div id="ui-layer">
-      <div id="start-btn" onclick="startExperience()">
-        👆 แตะเพื่อเริ่มปาร์ตี้ 🎵
-      </div>
-      <div class="hint-text" id="bottom-hint">ส่องกล้องไปที่การ์ด! 🎉</div>
+    }
+
+    #ui-layer {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 999;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    #start-btn {
+      pointer-events: auto;
+      background: rgba(255, 215, 0, 0.9);
+      color: black;
+      font-weight: bold;
+      font-size: 18px;
+      padding: 15px 30px;
+      border-radius: 50px;
+      border: 2px solid white;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+      font-family: sans-serif;
+      display: none;
+      /* Hidden until loaded */
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      animation: pulse 2s infinite;
+    }
+
+    .hint-text {
+      position: fixed;
+      bottom: 30px;
+      color: white;
+      background: rgba(0, 0, 0, 0.6);
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-family: sans-serif;
+      font-size: 14px;
+      display: none;
+    }
+
+    @keyframes pulse {
+      0% {
+        transform: scale(1);
+      }
+
+      50% {
+        transform: scale(1.05);
+      }
+
+      100% {
+        transform: scale(1);
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div id="ui-layer">
+    <div id="loading-screen">
+      <div class="spinner"></div>
+      <div style="font-family: sans-serif; font-size: 18px; font-weight: bold;">Loading Birthday Surprise...</div>
     </div>
+    <div id="start-btn" onclick="startExperience()">
+      👆 แตะเพื่อเริ่มปาร์ตี้ 🎵
+    </div>
+    <div class="hint-text" id="bottom-hint">ส่องกล้องไปที่การ์ด! 🎉</div>
+  </div>
 
-    <a-scene mindar-image="imageTargetSrc: ./targets.mind; filterMinCF:0.0001; filterBeta: 0.001;" 
-             color-space="sRGB" 
-             renderer="colorManagement: true, physicallyCorrectLights: true" 
-             vr-mode-ui="enabled: false" 
-             device-orientation-permission-ui="enabled: false">
-      
-      <a-assets>
-        <a-asset-item id="woodyModel" src="./animated/woody.glb"></a-asset-item>
-        <a-asset-item id="buzzModel" src="./animated/buzz.glb"></a-asset-item>
-        <a-asset-item id="andyModel" src="./animated/andy.glb"></a-asset-item>
-        <a-asset-item id="jessieModel" src="./animated/jessie.glb"></a-asset-item>
-        <a-asset-item id="potatoModel" src="./animated/potato_head.glb"></a-asset-item>
-        <a-asset-item id="slinkyModel" src="./animated/slinky_dog.glb"></a-asset-item>
-        <a-asset-item id="hammModel" src="./animated/hamm.glb"></a-asset-item>
-        <a-asset-item id="rexxModel" src="./animated/rexx.glb"></a-asset-item>
-        <a-asset-item id="lotsoModel" src="./animated/lotso.glb"></a-asset-item>
-        <a-asset-item id="bullseyeModel" src="./animated/bullseye.glb"></a-asset-item>
-        <a-asset-item id="greenman1Model" src="./animated/greenman1.glb"></a-asset-item>
-        <a-asset-item id="greenman2Model" src="./animated/greenman2.glb"></a-asset-item>
-        <a-asset-item id="greenman3Model" src="./animated/greenman3.glb"></a-asset-item>
-        <a-asset-item id="truckModel" src="./animated/truck.glb"></a-asset-item>
-        <audio id="hbdSound" src="./songs/toystory_cut.mp3" preload="auto"></audio>
-      </a-assets>
+  <a-scene mindar-image="imageTargetSrc: ./targets.mind; filterMinCF:0.0001; filterBeta: 0.001;" color-space="sRGB"
+    renderer="colorManagement: true, physicallyCorrectLights: true" vr-mode-ui="enabled: false"
+    device-orientation-permission-ui="enabled: false">
 
-      <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
+    <a-assets>
+      <a-asset-item id="woodyModel" src="./animated/woody.glb"></a-asset-item>
+      <a-asset-item id="buzzModel" src="./animated/buzz.glb"></a-asset-item>
+      <a-asset-item id="andyModel" src="./animated/andy.glb"></a-asset-item>
+      <a-asset-item id="jessieModel" src="./animated/jessie.glb"></a-asset-item>
+      <a-asset-item id="potatoModel" src="./animated/potato_head.glb"></a-asset-item>
+      <a-asset-item id="slinkyModel" src="./animated/slinky_dog.glb"></a-asset-item>
+      <a-asset-item id="hammModel" src="./animated/hamm.glb"></a-asset-item>
+      <a-asset-item id="rexxModel" src="./animated/rexx.glb"></a-asset-item>
+      <a-asset-item id="lotsoModel" src="./animated/lotso.glb"></a-asset-item>
+      <a-asset-item id="bullseyeModel" src="./animated/bullseye.glb"></a-asset-item>
+      <a-asset-item id="greenman1Model" src="./animated/greenman1.glb"></a-asset-item>
+      <a-asset-item id="greenman2Model" src="./animated/greenman2.glb"></a-asset-item>
+      <a-asset-item id="greenman3Model" src="./animated/greenman3.glb"></a-asset-item>
+      <a-asset-item id="truckModel" src="./animated/truck.glb"></a-asset-item>
+      <audio id="hbdSound" src="./songs/toystory_cut.mp3" preload="auto"></audio>
+    </a-assets>
 
-      <a-entity mindar-image-target="targetIndex: 0" id="targetEntity">
-        
-        <a-light type="ambient" intensity="1.2"></a-light>
-        <a-light type="directional" position="2 4 2" intensity="1.5"></a-light>
+    <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
 
-        <a-cylinder radius="6" height="0.1" position="0 -0.05 0" material="opacity: 0; transparent: true"></a-cylinder>
+    <a-entity mindar-image-target="targetIndex: 0" id="targetEntity">
 
-        <a-entity position="0 0.8 1.1" look-at="[camera]">
-            <a-text value="Happy Birthday!" 
-                    color="#FF4500" 
-                    align="center" 
-                    width="6" 
-                    shader="msdf"
-                    font="https://raw.githubusercontent.com/etiennepinchon/aframe-fonts/master/fonts/bangers/Bangers-Regular.json">
-            </a-text>
-        </a-entity>
+      <a-light type="ambient" intensity="1.2"></a-light>
+      <a-light type="directional" position="2 4 2" intensity="1.5"></a-light>
 
-        <a-entity gltf-model="#truckModel" rotation="0 -30 0" position="0.5 0 -3.5" scale="0.05 0.05 0.05"></a-entity>
+      <a-cylinder radius="6" height="0.1" position="0 -0.05 0" material="opacity: 0; transparent: true"></a-cylinder>
 
-        <a-entity gltf-model="#woodyModel" rotation="0 0 0" position="0 0 0" scale="25 25 25" animation-mixer></a-entity>
-        
-        <a-entity gltf-model="#andyModel" rotation="0 15 0" position="-0.6 0 -0.1" scale="25 25 25" animation-mixer></a-entity>
-        <a-entity gltf-model="#jessieModel" rotation="0 -15 0" position="0.6 0 -0.1" scale="0.02 0.02 0.02"></a-entity>
-
-        <a-entity position="0 1.2 0" animation="property: rotation; to: 0 360 0; loop: true; dur: 10000; easing: linear">
-            <a-entity gltf-model="#buzzModel" position="2.0 0 0" rotation="0 180 0" scale="25 25 25" animation-mixer="clip: *;"></a-entity>
-        </a-entity>
-
-        <a-entity gltf-model="#rexxModel" rotation="0 30 0" position="-1.2 0 0.3" scale="0.05 0.05 0.05"></a-entity>
-        <a-entity gltf-model="#bullseyeModel" rotation="0 -30 0" position="1.2 0 0.3" scale="0.02 0.02 0.02"></a-entity>
-        
-        <a-entity gltf-model="#hammModel" rotation="0 45 0" position="-0.9 0 0.6" scale="0.03 0.03 0.03"></a-entity>
-        <a-entity gltf-model="#slinkyModel" rotation="0 -45 0" position="0.9 0 0.6" scale="0.015 0.015 0.015"></a-entity>
-
-        <a-entity gltf-model="#potatoModel" rotation="0 20 0" position="-0.5 0 0.9" scale="0.03 0.03 0.03"></a-entity>
-        <a-entity gltf-model="#lotsoModel" rotation="0 -20 0" position="0.5 0 0.9" scale="0.3 0.3 0.3"></a-entity>
-
-        <a-entity gltf-model="#greenman1Model" rotation="0 0 0" position="-0.25 0 1.0" scale="0.08 0.08 0.08"></a-entity>
-        <a-entity gltf-model="#greenman2Model" rotation="0 0 0" position="0 0 1.1" scale="0.7 0.7 0.7"></a-entity>
-        <a-entity gltf-model="#greenman3Model" rotation="0 0 0" position="0.25 0 1.0" scale="0.7 0.7 0.7"></a-entity>
-        
-        <a-entity sound="src: #hbdSound; autoplay: false; loop: true; volume: 3; positional: false"></a-entity>
+      <a-entity position="0 0.8 1.1" look-at="[camera]">
+        <a-text value="Happy Birthday!" color="#FF4500" align="center" width="6" shader="msdf"
+          font="https://raw.githubusercontent.com/etiennepinchon/aframe-fonts/master/fonts/bangers/Bangers-Regular.json">
+        </a-text>
       </a-entity>
-    </a-scene>
 
-    <script>
-      let isMusicPlaying = false;
+      <a-entity gltf-model="#truckModel" rotation="0 -30 0" position="0.5 0 -3.5" scale="0.05 0.05 0.05"></a-entity>
 
-      function startExperience() {
-        document.getElementById('start-btn').style.display = 'none';
-        document.getElementById('bottom-hint').style.display = 'block';
-        
-        const soundEntity = document.querySelector('[sound]');
-        if (soundEntity && soundEntity.components.sound) {
-           soundEntity.components.sound.playSound();
-           soundEntity.components.sound.stopSound();
-           isMusicPlaying = true;
-        }
+      <a-entity gltf-model="#woodyModel" rotation="0 0 0" position="0 0 0" scale="25 25 25" animation-mixer></a-entity>
+
+      <a-entity gltf-model="#andyModel" rotation="0 15 0" position="-0.6 0 -0.1" scale="25 25 25"
+        animation-mixer></a-entity>
+      <a-entity gltf-model="#jessieModel" rotation="0 -15 0" position="0.6 0 -0.1" scale="0.02 0.02 0.02"></a-entity>
+
+      <a-entity position="0 1.2 0" animation="property: rotation; to: 0 360 0; loop: true; dur: 10000; easing: linear">
+        <a-entity gltf-model="#buzzModel" position="2.0 0 0" rotation="0 180 0" scale="25 25 25"
+          animation-mixer="clip: *;"></a-entity>
+      </a-entity>
+
+      <a-entity gltf-model="#rexxModel" rotation="0 30 0" position="-1.2 0 0.3" scale="0.05 0.05 0.05"></a-entity>
+      <a-entity gltf-model="#bullseyeModel" rotation="0 -30 0" position="1.2 0 0.3" scale="0.02 0.02 0.02"></a-entity>
+
+      <a-entity gltf-model="#hammModel" rotation="0 45 0" position="-0.9 0 0.6" scale="0.03 0.03 0.03"></a-entity>
+      <a-entity gltf-model="#slinkyModel" rotation="0 -45 0" position="0.9 0 0.6" scale="0.015 0.015 0.015"></a-entity>
+
+      <a-entity gltf-model="#potatoModel" rotation="0 20 0" position="-0.5 0 0.9" scale="0.03 0.03 0.03"></a-entity>
+      <a-entity gltf-model="#lotsoModel" rotation="0 -20 0" position="0.5 0 0.9" scale="0.3 0.3 0.3"></a-entity>
+
+      <a-entity gltf-model="#greenman1Model" rotation="0 0 0" position="-0.25 0 1.0" scale="0.08 0.08 0.08"></a-entity>
+      <a-entity gltf-model="#greenman2Model" rotation="0 0 0" position="0 0 1.1" scale="0.7 0.7 0.7"></a-entity>
+      <a-entity gltf-model="#greenman3Model" rotation="0 0 0" position="0.25 0 1.0" scale="0.7 0.7 0.7"></a-entity>
+
+      <a-entity sound="src: #hbdSound; autoplay: false; loop: true; volume: 3; positional: false"></a-entity>
+    </a-entity>
+  </a-scene>
+
+  <script>
+    let isMusicUnlocked = false;
+
+    document.querySelector('a-assets').addEventListener('loaded', () => {
+      document.getElementById('loading-screen').style.display = 'none';
+      document.getElementById('start-btn').style.display = 'flex';
+    });
+
+    function startExperience() {
+      document.getElementById('start-btn').style.display = 'none';
+      document.getElementById('bottom-hint').style.display = 'block';
+
+      // Bulletproof audio context unlock
+      const soundEntity = document.querySelector('[sound]');
+      if (soundEntity && soundEntity.components.sound) {
+        soundEntity.components.sound.playSound();
+        setTimeout(() => {
+          soundEntity.components.sound.pauseSound();
+          isMusicUnlocked = true;
+        }, 10);
       }
+    }
 
-      const scene = document.querySelector('a-scene');
-      
-      scene.addEventListener('targetFound', event => {
-        if (isMusicPlaying) {
-          const sound = document.querySelector('[sound]');
-          if(sound) sound.components.sound.playSound();
-        }
-        document.getElementById('bottom-hint').innerHTML = "🎉 สุขสันต์วันเกิด! 🎉";
-      });
+    const scene = document.querySelector('a-scene');
+    const targetEntity = document.getElementById('targetEntity');
+    let confettiEntity = null;
 
-      scene.addEventListener('targetLost', event => {
-        document.getElementById('bottom-hint').innerHTML = "ส่องกล้องไปที่การ์ดเพื่อดูต่อ...";
-      });
-    </script>
-  </body>
+    targetEntity.addEventListener('targetFound', event => {
+      if (isMusicUnlocked) {
+        const sound = document.querySelector('[sound]');
+        if (sound) sound.components.sound.playSound();
+      }
+      document.getElementById('bottom-hint').innerHTML = "🎉 สุขสันต์วันเกิด! 🎉";
+
+      // Add Confetti
+      if (!confettiEntity) {
+        confettiEntity = document.createElement('a-entity');
+        confettiEntity.setAttribute('particle-system', 'color: #EF0000,#44CC00,#0000FF,#FFD700,#FF00FF; particleCount: 300; velocityValue: 0 -2 0; positionSpread: 10 10 10; duration: NaN;');
+        confettiEntity.setAttribute('position', '0 5 -2');
+        scene.appendChild(confettiEntity);
+      }
+    });
+
+    targetEntity.addEventListener('targetLost', event => {
+      if (isMusicUnlocked) {
+        const sound = document.querySelector('[sound]');
+        if (sound) sound.components.sound.pauseSound();
+      }
+      document.getElementById('bottom-hint').innerHTML = "ส่องกล้องไปที่การ์ดเพื่อดูต่อ...";
+
+      // Remove Confetti
+      if (confettiEntity) {
+        confettiEntity.parentNode.removeChild(confettiEntity);
+        confettiEntity = null;
+      }
+    });
+  </script>
+</body>
+
 </html>
