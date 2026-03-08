@@ -199,17 +199,25 @@
       document.getElementById('start-btn').style.display = 'none';
       document.getElementById('bottom-hint').style.display = 'block';
 
-      // Bulletproof audio context unlock
-      const soundEntity = document.querySelector('[sound]');
-      if (soundEntity && soundEntity.components.sound) {
-        soundEntity.components.sound.playSound();
-        setTimeout(() => {
-          soundEntity.components.sound.pauseSound();
-          isMusicUnlocked = true;
-        }, 10);
+      const scene = document.querySelector('a-scene');
+
+      // Silent HTML5 Audio Unlock
+      const hbdSound = document.getElementById('hbdSound');
+      if (hbdSound) {
+        hbdSound.muted = true;
+        hbdSound.play().then(() => {
+          hbdSound.pause();
+          hbdSound.currentTime = 0;
+          hbdSound.muted = false;
+        }).catch(err => console.log("Audio unlock failed", err));
       }
 
-      const scene = document.querySelector('a-scene');
+      // Resume A-Frame Audio Context
+      if (scene.audioListener && scene.audioListener.context.state === 'suspended') {
+        scene.audioListener.context.resume();
+      }
+
+      isMusicUnlocked = true;
       scene.systems["mindar-image-system"].start();
       document.getElementById('targetEntity').setAttribute('visible', 'true');
     }
