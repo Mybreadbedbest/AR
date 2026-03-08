@@ -112,10 +112,10 @@
   <div id="ui-layer">
     <div id="loading-screen">
       <div class="spinner"></div>
-      <div style="font-family: sans-serif; font-size: 18px; font-weight: bold;">Loading Birthday Surprise...</div>
+      <div style="font-family: sans-serif; font-size: 18px; font-weight: bold;">Loading...</div>
     </div>
     <div id="start-btn" onclick="startExperience()">
-      👆 แตะเพื่อเริ่มปาร์ตี้ 🎵
+      แตะหน้าจอ 🎵
     </div>
     <div class="hint-text" id="bottom-hint">ส่องกล้องไปที่การ์ด! 🎉</div>
   </div>
@@ -128,7 +128,7 @@
       <a-asset-item id="woodyModel" src="./animated/woody.glb"></a-asset-item>
       <a-asset-item id="buzzModel" src="./animated/buzz.glb"></a-asset-item>
       <a-asset-item id="andyModel" src="./animated/andy.glb"></a-asset-item>
-      <a-asset-item id="jessieModel" src="./animated/jessie.glb"></a-asset-item>
+      <!-- <a-asset-item id="jessieModel" src="./animated/jessie.glb"></a-asset-item> -->
       <a-asset-item id="potatoModel" src="./animated/potato_head.glb"></a-asset-item>
       <a-asset-item id="slinkyModel" src="./animated/slinky_dog.glb"></a-asset-item>
       <a-asset-item id="hammModel" src="./animated/hamm.glb"></a-asset-item>
@@ -152,7 +152,7 @@
       <a-cylinder radius="6" height="0.1" position="0 -0.05 0" material="opacity: 0; transparent: true"></a-cylinder>
 
       <a-entity position="0 0.8 1.1" look-at="[camera]">
-        <a-text value="Happy Birthday!" color="#FF4500" align="center" width="6" shader="msdf"
+        <a-text value="Happy Birthday plopea!" color="#FF4500" align="center" width="3" shader="msdf"
           font="https://raw.githubusercontent.com/etiennepinchon/aframe-fonts/master/fonts/bangers/Bangers-Regular.json">
         </a-text>
       </a-entity>
@@ -163,7 +163,7 @@
 
       <a-entity gltf-model="#andyModel" rotation="0 15 0" position="-0.6 0 -0.1" scale="25 25 25"
         animation-mixer></a-entity>
-      <a-entity gltf-model="#jessieModel" rotation="0 -15 0" position="0.6 0 -0.1" scale="0.02 0.02 0.02"></a-entity>
+      <!-- <a-entity gltf-model="#jessieModel" rotation="0 -15 0" position="0.6 0 -0.1" scale="0.02 0.02 0.02"></a-entity> -->
 
       <a-entity position="0 1.2 0" animation="property: rotation; to: 0 360 0; loop: true; dur: 10000; easing: linear">
         <a-entity gltf-model="#buzzModel" position="2.0 0 0" rotation="0 180 0" scale="25 25 25"
