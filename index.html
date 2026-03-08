@@ -206,6 +206,13 @@
         scene.audioListener.context.resume();
       }
 
+      // Synchronous Play/Pause to "bless" the specific sound component
+      const soundEntity = document.querySelector('[sound]');
+      if (soundEntity && soundEntity.components.sound) {
+        soundEntity.components.sound.playSound();
+        soundEntity.components.sound.pauseSound();
+      }
+
       isMusicUnlocked = true;
       scene.systems["mindar-image-system"].start();
       document.getElementById('targetEntity').setAttribute('visible', 'true');
